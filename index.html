@@ -1324,48 +1324,65 @@
     </div>
   </div>
 
-  <!-- SEARCH -->
-  <div class="search-section">
-    <div class="search-box">
-      <h3>🔍 Jegyvásárlás / Útvonaltervező</h3>
-      <div class="search-grid">
-        <div class="search-field">
-          <label>Indulás</label>
-          <input type="text" placeholder="pl. Pilisvörösvár">
-        </div>
-        <div class="search-field">
-          <label>Érkezés</label>
-          <input type="text" placeholder="pl. Budapest, Árpád híd">
-        </div>
-        <div class="search-field">
-          <label>Dátum</label>
-          <input type="date" value="2026-05-26">
-        </div>
-        <div class="search-field">
-          <label>Utasok</label>
-          <select>
-            <option>1 utas</option>
-            <option>2 utas</option>
-            <option>3 utas</option>
-            <option>4 utas</option>
-          </select>
-        </div>
-        <div class="search-field">
-          <label>Jegytípus</label>
-          <select>
-            <option>Teljes árú</option>
-            <option>Tanuló</option>
-            <option>Nyugdíjas</option>
-          </select>
-        </div>
-        <div class="search-field">
-          <label>&nbsp;</label>
-          <button class="btn-primary" style="width:100%">Keresés</button>
-        </div>
-      </div>
-    </div>
+  <!-- Ticket -->
+
+ <section class="ticket-box">
+
+  <h1>Jegyvásárlás</h1>
+  <p>Válassz útvonalat és időpontot</p>
+
+  <div class="form">
+
+    <input id="from" placeholder="Indulás (pl. Pilisvörösvár)">
+    <input id="to" placeholder="Érkezés (pl. Budapest)">
+    
+    <input type="date" id="date">
+
+    <select id="passengers">
+      <option>1 utas</option>
+      <option>2 utas</option>
+      <option>3 utas</option>
+      <option>4 utas</option>
+    </select>
+
+    <button onclick="searchTickets()">Járatok keresése</button>
+
   </div>
 
+  <div id="results"></div>
+
+</section>
+
+<script> function searchTickets() {
+  const from = document.getElementById("from").value;
+  const to = document.getElementById("to").value;
+
+  const results = document.getElementById("results");
+
+  if (!from || !to) {
+    results.innerHTML = "<p>Add meg az útvonalat.</p>";
+    return;
+  }
+
+  const fakeRoutes = [
+    { id: 1, time: "06:20", price: "500Ft" },
+    { id: 2, time: "07:10", price: "500 Ft" },
+    { id: 3, time: "08:05", price: "500 Ft" }
+  ];
+
+  results.innerHTML = fakeRoutes.map(r => `
+    <div class="ticket-card">
+      <h3>${from} → ${to}</h3>
+      <p>Indulás: ${r.time}</p>
+      <p>Ár: ${r.price}</p>
+      <button onclick="buyTicket(${r.id})">Jegy megvétele</button>
+    </div>
+  `).join("");
+}
+
+function buyTicket(id) {
+  alert("Jegy sikeresen lefoglalva (demo) 🎫");
+} </script>
   <!-- ROUTES -->
   <section class="routes-section">
     <div class="section-header">
