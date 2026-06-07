@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKV – Pilisvörösvári Közlekedési Vállalat</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --volán-green: #006633;
+    --volán-green-dark: #004d26;
+    --volán-green-light: #00884a;
+    --volán-yellow: #FFD100;
+    --volán-yellow-dark: #e6bc00;
+    --white: #ffffff;
+    --off-white: #f5f5f0;
+    --gray-100: #f0f0ec;
+    --gray-200: #e0e0d8;
+    --gray-500: #888880;
+    --gray-700: #444440;
+    --black: #1a1a18;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--off-white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--volán-green);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 4px solid var(--volán-yellow);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-badge {
+    background: var(--volán-yellow);
+    color: var(--volán-green-dark);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    padding: 4px 12px;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+  }
+
+  .logo-text {
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  .logo-text small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.75rem;
+    opacity: 0.8;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    background: rgba(255,255,255,0.15);
+    color: var(--volán-yellow);
+  }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ==================== FŐOLDAL ==================== */
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--volán-green-dark) 0%, var(--volán-green) 60%, var(--volán-green-light) 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 80px 2rem 100px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,209,0,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 0; right: 0;
+    height: 80px;
+    background: var(--off-white);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--volán-yellow);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    color: white;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 .accent {
+    color: var(--volán-yellow);
+    display: block;
+  }
+
+  .hero-sub {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 20px 0 36px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--volán-yellow);
+    color: var(--volán-green-dark);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--volán-yellow-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,209,0,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 13px 28px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: white;
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  /* HERO CARD */
+  .hero-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--gray-200);
+  }
+
+  .hero-card-header h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--volán-green);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .live-dot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #22c55e;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .live-dot::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .departure-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: var(--gray-100);
+    border-left: 4px solid var(--volán-green);
+    transition: all 0.2s;
+  }
+
+  .departure-row:hover {
+    background: var(--gray-200);
+    transform: translateX(2px);
+  }
+
+  .departure-line {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--volán-green);
+    min-width: 60px;
+  }
+
+  .departure-route {
+    font-size: 0.85rem;
+    color: var(--gray-700);
+    flex: 1;
+    padding: 0 12px;
+  }
+
+  .departure-time {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--black);
+  }
+
+  .departure-status {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #22c55e;
+    text-align: right;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--volán-green-dark);
+    padding: 24px 2rem;
+  }
+
+  .stats-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align: center;
+  }
+
+  .stat-item {
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    color: var(--volán-yellow);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* SEARCH BOX */
+  .search-section {
+    max-width: 1280px;
+    margin: -40px auto 60px;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .search-box {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    border-top: 4px solid var(--volán-green);
+  }
+
+  .search-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--volán-green);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+
+  .search-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto auto auto;
+    gap: 12px;
+    align-items: end;
+  }
+
+  .search-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .search-field label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-500);
+  }
+
+  .search-field input, .search-field select {
+    background: var(--gray-100);
+    border: 2px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-field input:focus, .search-field select:focus {
+    border-color: var(--volán-green);
+  }
+
+  /* JÁRATOK / ROUTES SECTION */
+  .routes-section {
+    max-width: 1280px;
+    margin: 0 auto 80px;
+    padding: 0 2rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--volán-green);
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    color: var(--black);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .route-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .route-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+
+  .route-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,102,51,0.15);
+    border-color: var(--volán-green);
+  }
+
+  .route-card-header {
+    background: var(--volán-green);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .route-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--volán-yellow);
+    line-height: 1;
+  }
+
+  .route-badge {
+    background: var(--volán-yellow);
+    color: var(--volán-green-dark);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .route-card-body {
+    padding: 20px;
+  }
+
+  .route-endpoints {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .route-from, .route-to {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--black);
+  }
+
+  .route-arrow {
+    color: var(--volán-green);
+    font-size: 1.4rem;
+    font-weight: 900;
+  }
+
+  .route-stops {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    margin-bottom: 14px;
+  }
+
+  .route-info-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .route-info-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--gray-700);
+  }
+
+  .route-info-icon {
+    width: 20px; height: 20px;
+    background: var(--gray-100);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+  }
+
+  /* FLEET */
+  .fleet-section {
+    background: var(--volán-green-dark);
+    padding: 80px 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fleet-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.02) 40px,
+      rgba(255,255,255,0.02) 80px
+    );
+  }
+
+  .fleet-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .fleet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+  }
+
+  .fleet-section .section-label { color: var(--volán-yellow); }
+  .fleet-section .section-title { color: white; }
+
+  .fleet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .fleet-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .fleet-card:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-4px);
+    border-color: var(--volán-yellow);
+  }
+
+  .fleet-img {
+    height: 180px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.2);
+  }
+
+  .fleet-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+
+  .fleet-card:hover .fleet-img img { transform: scale(1.05); }
+
+  .fleet-info {
+    padding: 20px;
+  }
+
+  .fleet-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .fleet-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .fleet-features li {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .fleet-features li::before {
+    content: '✓';
+    color: var(--volán-yellow);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    padding: 60px 2rem 30px;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer-brand .logo-badge-footer {
+    background: var(--volán-yellow);
+    color: var(--volán-green-dark);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    padding: 6px 16px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-col ul li a, .footer-col ul li {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .footer-col ul li a:hover { color: var(--volán-yellow); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .volanbusz-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.05em;
+  }
+
+  .volanbusz-logo span {
+    width: 28px; height: 14px;
+    background: var(--volán-green);
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  /* ==================== MENETREND OLDAL ==================== */
+  .schedule-page {
+    min-height: 80vh;
+  }
+
+  .schedule-hero {
+    background: linear-gradient(135deg, var(--volán-green-dark) 0%, var(--volán-green) 100%);
+    padding: 60px 2rem 80px;
+    position: relative;
+  }
+
+  .schedule-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 60px;
+    background: var(--off-white);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .schedule-hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .schedule-hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3.5rem;
+    color: white;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .schedule-hero h1 span { color: var(--volán-yellow); }
+
+  .schedule-hero p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.05rem;
+  }
+
+  .schedule-content {
+    max-width: 1280px;
+    margin: -20px auto 80px;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* Tab selector */
+  .tab-selector {
+    display: flex;
+    gap: 4px;
+    background: white;
+    padding: 6px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 32px;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    flex: 1;
+    min-width: 150px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover {
+    background: var(--gray-100);
+    color: var(--volán-green);
+  }
+
+  .tab-btn.active {
+    background: var(--volán-green);
+    color: var(--volán-yellow);
+  }
+
+  .tab-btn .tab-num {
+    font-size: 1.4rem;
+    font-weight: 900;
+    display: block;
+    line-height: 1;
+  }
+
+  .tab-btn .tab-route {
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0.8;
+    letter-spacing: 0.05em;
+  }
+
+  /* Schedule table */
+  .schedule-panel { display: none; }
+  .schedule-panel.active { display: block; }
+
+  .schedule-info-bar {
+    background: white;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-left: 5px solid var(--volán-green);
+  }
+
+  .sched-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3rem;
+    color: var(--volán-green);
+    line-height: 1;
+  }
+
+  .sched-meta { display: flex; flex-direction: column; gap: 4px; }
+
+  .sched-route-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--black);
+    text-transform: uppercase;
+  }
+
+  .sched-route-detail {
+    font-size: 0.85rem;
+    color: var(--gray-500);
+  }
+
+  .sched-operator {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .volanbusz-tag {
+    background: var(--volán-green);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    padding: 5px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .volanbusz-tag span { color: var(--volán-yellow); }
+
+  .sched-valid {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+  }
+
+  /* Direction toggle */
+  .direction-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .dir-btn {
+    background: white;
+    border: 2px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .dir-btn.active {
+    background: var(--volán-green);
+    color: white;
+    border-color: var(--volán-green);
+  }
+
+  /* Timetable */
+  .timetable-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .timetable-header {
+    background: var(--volán-green);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .timetable-header h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .timetable-legend {
+    display: flex;
+    gap: 16px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  .stop-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .stop-table thead th {
+    background: var(--gray-100);
+    padding: 10px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    text-align: left;
+    border-bottom: 2px solid var(--gray-200);
+  }
+
+  .stop-table tbody tr {
+    border-bottom: 1px solid var(--gray-100);
+    transition: background 0.15s;
+  }
+
+  .stop-table tbody tr:hover { background: #f9f9f6; }
+
+  .stop-table tbody td {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: var(--gray-700);
+  }
+
+  .stop-name {
+    font-weight: 600;
+    color: var(--black);
+  }
+
+  .stop-name.terminus {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--volán-green);
+  }
+
+  .time-cell {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--black);
+    letter-spacing: 0.02em;
+  }
+
+  .times-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 16px 24px;
+  }
+
+  .time-chip {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--black);
+    transition: all 0.15s;
+    cursor: default;
+  }
+
+  .time-chip:hover {
+    background: var(--volán-green);
+    color: white;
+    border-color: var(--volán-green);
+  }
+
+  .time-chip.weekend {
+    border-color: var(--volán-yellow);
+  }
+
+  /* Notice box */
+  .notice-box {
+    background: #fff8e1;
+    border: 1px solid var(--volán-yellow);
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin: 20px 0;
+    font-size: 0.87rem;
+    color: #7a6000;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .notice-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* Stops list */
+  .stops-list {
+    padding: 20px 24px;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .stops-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 16px;
+  }
+
+  .stop-dots {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .stop-dot-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+  }
+
+  .stop-dot-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .stop-dot-circle {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    border: 2px solid var(--volán-green);
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .stop-dot-circle.terminus-dot {
+    background: var(--volán-green);
+    width: 16px; height: 16px;
+  }
+
+  .stop-dot-line {
+    width: 2px;
+    background: var(--volán-green);
+    opacity: 0.3;
+    height: 28px;
+  }
+
+  .stop-dot-row:last-child .stop-dot-line { display: none; }
+
+  .stop-dot-name {
+    font-size: 0.88rem;
+    color: var(--gray-700);
+    padding: 10px 0;
+  }
+
+  .stop-dot-name.terminus-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--volán-green);
+  }
+
+  /* Link style */
+  .link-btn {
+    background: none;
+    border: none;
+    color: var(--volán-green);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+
+  /* Responsive basics */
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    .search-grid { grid-template-columns: 1fr; }
+    .route-cards { grid-template-columns: 1fr; }
+    .fleet-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showPage('home')">
+      <span class="logo-badge">PKV</span>
+      <span class="logo-text">
+        Pilisvörösvári Közlekedési Vállalat
+        <small>VOLÁNBUSZ üzemeltetésben</small>
+      </span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Főoldal</a></li>
+      <li><a href="#" onclick="showPage('schedule')" id="nav-schedule">Menetrendek</a></li>
+      <li><a href="#">Jegyvásárlás</a></li>
+      <li><a href="#">Flotta</a></li>
+      <li><a href="#">Kapcsolat</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ==================== FŐOLDAL ==================== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">🚍 Volánbusz agglomerációs közlekedés</div>
+        <h1>PKV<span class="accent">Pilisvörösvár</span></h1>
+        <p class="hero-sub">
+          Modern regionális autóbusz-közlekedés a Pilis térségében. Megbízható menetrendek, közvetlen kapcsolat Budapesttel – VOLÁNBUSZ üzemeltetésben.
+        </p>
+        <div class="hero-buttons">
+          <a class="btn-primary" href="#" onclick="showPage('schedule')">Menetrendek megtekintése</a>
+          <a class="btn-outline" href="#">Online jegyvásárlás</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <h3>Élő indulások – Ma</h3>
+          <span class="live-dot">Élő</span>
+        </div>
+        <div class="departure-row">
+          <div>
+            <div class="departure-line">830</div>
+            <div class="departure-route">Pilisvörösvár → Budapest</div>
+          </div>
+          <div>
+            <div class="departure-time">06:20</div>
+            <div class="departure-status">● Pontos</div>
+          </div>
+        </div>
+        <div class="departure-row">
+          <div>
+            <div class="departure-line">820</div>
+            <div class="departure-route">Budapest → Pilisvörösvár</div>
+          </div>
+          <div>
+            <div class="departure-time">07:15</div>
+            <div class="departure-status">● Pontos</div>
+          </div>
+        </div>
+        <div class="departure-row">
+          <div>
+            <div class="departure-line">831</div>
+            <div class="departure-route">Solymár → Pilisszántó</div>
+          </div>
+          <div>
+            <div class="departure-time">08:05</div>
+            <div class="departure-status">● Pontos</div>
+          </div>
+        </div>
+        <div class="departure-row">
+          <div>
+            <div class="departure-line">821</div>
+            <div class="departure-route">Budapest → Pilisvörösvár vasút</div>
+          </div>
+          <div>
+            <div class="departure-time">09:00</div>
+            <div class="departure-status">● Pontos</div>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top:16px;">
+          <button class="link-btn" onclick="showPage('schedule')">Összes menetrend megtekintése →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Aktív járat</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">~35'</div>
+        <div class="stat-label">Bp–Pilisvörösvár menetidő</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">06–23</div>
+        <div class="stat-label">Napi közlekedési idő</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">VOLÁN</div>
+        <div class="stat-label">Üzemeltető</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-section">
+    <div class="search-box">
+      <h3>🔍 Jegyvásárlás / Útvonaltervező</h3>
+      <div class="search-grid">
+        <div class="search-field">
+          <label>Indulás</label>
+          <input type="text" placeholder="pl. Pilisvörösvár">
+        </div>
+        <div class="search-field">
+          <label>Érkezés</label>
+          <input type="text" placeholder="pl. Budapest, Árpád híd">
+        </div>
+        <div class="search-field">
+          <label>Dátum</label>
+          <input type="date" value="2026-05-26">
+        </div>
+        <div class="search-field">
+          <label>Utasok</label>
+          <select>
+            <option>1 utas</option>
+            <option>2 utas</option>
+            <option>3 utas</option>
+            <option>4 utas</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Jegytípus</label>
+          <select>
+            <option>Teljes árú</option>
+            <option>Tanuló</option>
+            <option>Nyugdíjas</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>&nbsp;</label>
+          <button class="btn-primary" style="width:100%">Keresés</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROUTES -->
+  <section class="routes-section">
+    <div class="section-header">
+      <div>
+        <div class="section-label">VOLÁNBUSZ agglomerációs járatok</div>
+        <div class="section-title">Járataink</div>
+      </div>
+      <button class="btn-primary" onclick="showPage('schedule')" style="font-size:0.9rem; padding:12px 20px;">
+        Teljes menetrend →
+      </button>
+    </div>
+    <div class="route-cards">
+      <div class="route-card" onclick="showPage('schedule'); setTab('tab-830')">
+        <div class="route-card-header">
+          <div class="route-number">830</div>
+          <span class="route-badge">Helyközi</span>
+        </div>
+        <div class="route-card-body">
+          <div class="route-endpoints">
+            <span class="route-from">Budapest</span>
+            <span class="route-arrow">⇄</span>
+            <span class="route-to">Pilisszántó</span>
+          </div>
+          <div class="route-stops">Solymár · Pilisszentiván · Pilisvörösvár érintésével</div>
+          <div class="route-info-row">
+            <span class="route-info-item"><span class="route-info-icon">🕐</span> ~45 perc</span>
+            <span class="route-info-item"><span class="route-info-icon">📍</span> Árpád híd áll.</span>
+            <span class="route-info-item"><span class="route-info-icon">🗓</span> Naponta</span>
+          </div>
+        </div>
+      </div>
+      <div class="route-card" onclick="showPage('schedule'); setTab('tab-831')">
+        <div class="route-card-header">
+          <div class="route-number">831</div>
+          <span class="route-badge">Helyközi</span>
+        </div>
+        <div class="route-card-body">
+          <div class="route-endpoints">
+            <span class="route-from">Solymár</span>
+            <span class="route-arrow">→</span>
+            <span class="route-to">Pilisszántó</span>
+          </div>
+          <div class="route-stops">Solymár vasúáll. · Pilisszentiván · Pilisvörösvár érintésével</div>
+          <div class="route-info-row">
+            <span class="route-info-item"><span class="route-info-icon">🕐</span> ~35 perc</span>
+            <span class="route-info-item"><span class="route-info-icon">🚂</span> Vasúti csatlakozás</span>
+            <span class="route-info-item"><span class="route-info-icon">🗓</span> Naponta</span>
+          </div>
+        </div>
+      </div>
+      <div class="route-card" onclick="showPage('schedule'); setTab('tab-820')">
+        <div class="route-card-header">
+          <div class="route-number">820</div>
+          <span class="route-badge">Helyközi</span>
+        </div>
+        <div class="route-card-body">
+          <div class="route-endpoints">
+            <span class="route-from">Budapest</span>
+            <span class="route-arrow">⇄</span>
+            <span class="route-to">Pilisszántó</span>
+          </div>
+          <div class="route-stops">Solymár (Külső Bécsi út) · Pilisvörösvár érintésével</div>
+          <div class="route-info-row">
+            <span class="route-info-item"><span class="route-info-icon">🕐</span> ~40 perc</span>
+            <span class="route-info-item"><span class="route-info-icon">📍</span> Árpád híd áll.</span>
+            <span class="route-info-item"><span class="route-info-icon">🗓</span> Naponta</span>
+          </div>
+        </div>
+      </div>
+      <div class="route-card" onclick="showPage('schedule'); setTab('tab-821')">
+        <div class="route-card-header">
+          <div class="route-number">821</div>
+          <span class="route-badge">Módosított</span>
+        </div>
+        <div class="route-card-body">
+          <div class="route-endpoints">
+            <span class="route-from">Budapest</span>
+            <span class="route-arrow">→</span>
+            <span class="route-to">Pilisvörösvár vasút.</span>
+          </div>
+          <div class="route-stops">820-as útvonal + Pilisvörösvár vasútállomás kitérővel</div>
+          <div class="route-info-row">
+            <span class="route-info-item"><span class="route-info-icon">🕐</span> ~40 perc</span>
+            <span class="route-info-item"><span class="route-info-icon">🚂</span> Vasúti csatlakozás</span>
+            <span class="route-info-item"><span class="route-info-icon">🗓</span> Kiválasztott járatok</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLEET -->
+  <section class="fleet-section">
+    <div class="fleet-inner">
+      <div class="fleet-header">
+        <div>
+          <div class="section-label">Modern járműpark</div>
+          <div class="section-title">VOLÁNBUSZ Flotta</div>
+        </div>
+        <div style="color:rgba(255,255,255,0.5); font-size:0.85rem;">Klíma · USB töltés · Alacsonypadlós (kivétel Volvo)</div>
+      </div>
+      <div class="fleet-grid">
+        <div class="fleet-card">
+          <div class="fleet-img">
+            <img src="https://martin88nagy-ui.github.io/Sim-Hub/images/econell-12.png" alt="Credo Econell 12">
+          </div>
+          <div class="fleet-info">
+            <div class="fleet-name">Credo Econell 12</div>
+            <ul class="fleet-features">
+              <li>Alacsonypadlós kialakítás</li>
+              <li>Klímaberendezés</li>
+              <li>USB töltési lehetőség</li>
+              <li>Valós idejű járatkövetés</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fleet-card">
+          <div class="fleet-img">
+            <img src="https://martin88nagy-ui.github.io/Sim-Hub/images/econell-next.png" alt="Credo Econell 12 Next">
+          </div>
+          <div class="fleet-info">
+            <div class="fleet-name">Credo Econell 12 Next</div>
+            <ul class="fleet-features">
+              <li>Alacsonypadlós kialakítás</li>
+              <li>Korszerű utastájékoztató</li>
+              <li>USB töltési lehetőség</li>
+              <li>Akadálymentesített</li>
+            </ul>
+          </div>
+        </div>
+        <div class="fleet-card">
+          <div class="fleet-img" style="background:#1a1a18; display:flex; align-items:center; justify-content:center;">
+            <span style="font-size:3rem;">🚌</span>
+          </div>
+          <div class="fleet-info">
+            <div class="fleet-name">Volvo Alfa Regio</div>
+            <ul class="fleet-features">
+              <li>Távolsági kialakítás</li>
+              <li>Erős, megbízható motor</li>
+              <li>Klímaberendezés</li>
+              <li>Kényelmes ülések</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo-badge-footer">PKV</div>
+          <p>Pilisvörösvári Közlekedési Vállalat – VOLÁNBUSZ agglomerációs közlekedési platform a Pilis térségének utasai számára.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Oldalak</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('home')">Főoldal</a></li>
+            <li><a href="#" onclick="showPage('schedule')">Menetrendek</a></li>
+            <li><a href="#">Jegyvásárlás</a></li>
+            <li><a href="#">Flotta</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Járatok</h4>
+          <ul>
+            <li onclick="showPage('schedule'); setTab('tab-830')">830 – Budapest/Pilisszántó</li>
+            <li onclick="showPage('schedule'); setTab('tab-831')">831 – Solymár/Pilisszántó</li>
+            <li onclick="showPage('schedule'); setTab('tab-820')">820 – Budapest/Pilisszántó</li>
+            <li onclick="showPage('schedule'); setTab('tab-821')">821 – Budapest/Pilisvörösvár vasút.</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kapcsolat</h4>
+          <ul>
+            <li>Pilisvörösvár</li>
+            <li>+36 1 555 0101</li>
+            <li>info@pkv.hu</li>
+            <li>volanbusz.hu</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 PKV – Pilisvörösvári Közlekedési Vállalat</span>
+        <div class="volanbusz-logo">
+          <span></span> VOLÁNBUSZ Zrt. üzemeltetésben
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== MENETREND OLDAL ==================== -->
+<div id="page-schedule" class="page">
+  <div class="schedule-hero">
+    <div class="schedule-hero-inner">
+      <div class="hero-badge" style="margin-bottom:16px;">VOLÁNBUSZ agglomerációs menetrendek</div>
+      <h1>Menet<span>rendek</span></h1>
+      <p>830 · 831 · 820 · 821-es járatok – Budapest és a Pilis-vidék között</p>
+    </div>
+  </div>
+
+  <div class="schedule-content">
+
+    <div class="notice-box">
+      <span class="notice-icon">ℹ️</span>
+      <div>
+        <strong>Menetrendi érvényesség:</strong> Az alábbi menetrendek a 2025. december 14-től érvényes, illetve a 2025. szeptember 1-től bevezetett módosításokat tartalmazzák. A pontos, aktuális menetrendért kérjük látogassa meg a <strong>volanbusz.hu</strong> oldalt vagy a <strong>mavcsoport.hu</strong> menetrendkeresőjét.
+      </div>
+    </div>
+
+    <!-- TAB SELECTOR -->
+    <div class="tab-selector">
+      <button class="tab-btn active" id="tab-830" onclick="setTab('tab-830')">
+        <span class="tab-num">830</span>
+        <span class="tab-route">Budapest ↔ Pilisszántó</span>
+      </button>
+      <button class="tab-btn" id="tab-831" onclick="setTab('tab-831')">
+        <span class="tab-num">831</span>
+        <span class="tab-route">Solymár → Pilisszántó</span>
+      </button>
+      <button class="tab-btn" id="tab-820" onclick="setTab('tab-820')">
+        <span class="tab-num">820</span>
+        <span class="tab-route">Budapest ↔ Pilisszántó</span>
+      </button>
+      <button class="tab-btn" id="tab-821" onclick="setTab('tab-821')">
+        <span class="tab-num">821</span>
+        <span class="tab-route">Budapest → Pilisvörösvár vasút.</span>
+      </button>
+    </div>
+
+    <!-- ===== 830 ===== -->
+    <div class="schedule-panel active" id="panel-830">
+      <div class="schedule-info-bar">
+        <div class="sched-number">830</div>
+        <div class="sched-meta">
+          <div class="sched-route-name">Budapest – Solymár – Pilisszentiván – Pilisvörösvár – Pilisszántó</div>
+          <div class="sched-route-detail">Indulás: Budapest, Árpád híd autóbusz-állomás · Végállomás: Pilisszántó, autóbusz-forduló</div>
+        </div>
+        <div class="sched-operator">
+          <div class="volanbusz-tag">VOLÁN<span>BUSZ</span></div>
+          <div class="sched-valid">Érvényes: 2025.12.14-től visszavonásig</div>
+        </div>
+      </div>
+
+      <div class="direction-toggle">
+        <button class="dir-btn active" onclick="toggleDir(this, 'dir-830-a', 'dir-830-b')">
+          🟢 Budapest → Pilisszántó irányban
+        </button>
+        <button class="dir-btn" onclick="toggleDir(this, 'dir-830-b', 'dir-830-a')">
+          ↩ Pilisszántó → Budapest irányban
+        </button>
+      </div>
+
+      <!-- Irány A: Budapest → Pilisszántó -->
+      <div id="dir-830-a">
+        <div class="timetable-container">
+          <div class="timetable-header">
+            <h3>Budapest → Pilisszántó – Indulási idők (Árpád híd)</h3>
+            <div class="timetable-legend">
+              <span class="legend-item"><span class="legend-dot" style="background:#FFD100"></span> H–P munkanapokon</span>
+              <span class="legend-item"><span class="legend-dot" style="background:white"></span> Naponta</span>
+            </div>
+          </div>
+          <div style="padding:16px 24px 8px; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:700; color:var(--gray-500); text-transform:uppercase; letter-spacing:0.06em;">
+            Indulások Bp., Árpád híd autóbusz-állomásról
+          </div>
+          <div class="times-grid">
+            <div class="time-chip">04:55</div>
+            <div class="time-chip">05:30</div>
+            <div class="time-chip">06:20</div>
+            <div class="time-chip">06:50</div>
+            <div class="time-chip weekend">07:15</div>
+            <div class="time-chip">07:45</div>
+            <div class="time-chip weekend">08:20</div>
+            <div class="time-chip">09:00</div>
+            <div class="time-chip weekend">09:45</div>
+            <div class="time-chip">10:30</div>
+            <div class="time-chip weekend">11:15</div>
+            <div class="time-chip">12:00</div>
+            <div class="time-chip weekend">12:45</div>
+            <div class="time-chip">13:30</div>
+            <div class="time-chip weekend">14:15</div>
+            <div class="time-chip">15:00</div>
+            <div class="time-chip">15:45</div>
+            <div class="time-chip">16:30</div>
+            <div class="time-chip">17:15</div>
+            <div class="time-chip">18:00</div>
+            <div class="time-chip">19:00</div>
+            <div class="time-chip">20:15</div>
+            <div class="time-chip">21:30</div>
+            <div class="time-chip">23:00</div>
+          </div>
+
+          <div class="stops-list">
+            <div class="stops-title">Megállók sorrendben</div>
+            <div class="stop-dots">
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle terminus-dot"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name terminus-name">Budapest, Árpád híd aut. állomás</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Budapest, Orbán B. út</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Budapest, Bóbita u.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Budapest, Üröm v. mh.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Solymár, Auchan bej. út</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Solymár, Hold u.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisszentiván, kh.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisszentiván, Szabadság út 85.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisszentiván, Szabadság út 126.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisszentiván, aut. ford.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisszentiván, Szabadság út 194.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, vasútállomás bej. út</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, Eperjesi u.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, Csokonai u.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, Szt. Erzsébet Otthon</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisszántó, Vörösmarty u. 43.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisszántó, kh.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle terminus-dot"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name terminus-name">Pilisszántó, autóbusz-forduló</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Irány B: Pilisszántó → Budapest -->
+      <div id="dir-830-b" style="display:none;">
+        <div class="timetable-container">
+          <div class="timetable-header">
+            <h3>Pilisszántó → Budapest – Indulási idők</h3>
+          </div>
+          <div style="padding:16px 24px 8px; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:700; color:var(--gray-500); text-transform:uppercase; letter-spacing:0.06em;">
+            Indulások Pilisszántó, aut. fordulóról
+          </div>
+          <div class="times-grid">
+            <div class="time-chip">04:05</div>
+            <div class="time-chip">04:55</div>
+            <div class="time-chip">05:40</div>
+            <div class="time-chip">06:15</div>
+            <div class="time-chip">06:55</div>
+            <div class="time-chip weekend">07:30</div>
+            <div class="time-chip">08:10</div>
+            <div class="time-chip weekend">08:50</div>
+            <div class="time-chip">09:30</div>
+            <div class="time-chip weekend">10:15</div>
+            <div class="time-chip">11:00</div>
+            <div class="time-chip weekend">12:00</div>
+            <div class="time-chip">13:00</div>
+            <div class="time-chip weekend">14:00</div>
+            <div class="time-chip">15:00</div>
+            <div class="time-chip">16:00</div>
+            <div class="time-chip">17:00</div>
+            <div class="time-chip">18:15</div>
+            <div class="time-chip">19:30</div>
+            <div class="time-chip">21:00</div>
+            <div class="time-chip">22:30</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 831 ===== -->
+    <div class="schedule-panel" id="panel-831">
+      <div class="schedule-info-bar">
+        <div class="sched-number">831</div>
+        <div class="sched-meta">
+          <div class="sched-route-name">Solymár vasútállomás – Pilisszentiván – Pilisvörösvár – Pilisszántó</div>
+          <div class="sched-route-detail">Vasúti csatlakozással · Indulás: Solymár vasútállomás · Végállomás: Pilisszántó, aut. forduló</div>
+        </div>
+        <div class="sched-operator">
+          <div class="volanbusz-tag">VOLÁN<span>BUSZ</span></div>
+          <div class="sched-valid">Érvényes: 2025.07.28-tól visszavonásig</div>
+        </div>
+      </div>
+
+      <div class="notice-box">
+        <span class="notice-icon">🚂</span>
+        <div>
+          <strong>Vasúti csatlakozás:</strong> A 831-es járat Solymár vasútállomásnál csatlakozik a Z72-es és S76-os vonatokhoz. 21:00 előtt minden vonathoz, 21:00 után minden második vonathoz indul busz.
+        </div>
+      </div>
+
+      <div class="timetable-container">
+        <div class="timetable-header">
+          <h3>Solymár vasútállomás → Pilisszántó – Indulási idők</h3>
+        </div>
+        <div style="padding:16px 24px 8px; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:700; color:var(--gray-500); text-transform:uppercase; letter-spacing:0.06em;">
+          Indulások Solymár vasútállomásról
+        </div>
+        <div class="times-grid">
+          <div class="time-chip">05:10</div>
+          <div class="time-chip">05:52</div>
+          <div class="time-chip">06:28</div>
+          <div class="time-chip">06:58</div>
+          <div class="time-chip">07:28</div>
+          <div class="time-chip">07:58</div>
+          <div class="time-chip">08:28</div>
+          <div class="time-chip">08:58</div>
+          <div class="time-chip">09:28</div>
+          <div class="time-chip">09:58</div>
+          <div class="time-chip">10:28</div>
+          <div class="time-chip">11:28</div>
+          <div class="time-chip">12:28</div>
+          <div class="time-chip">13:28</div>
+          <div class="time-chip">14:28</div>
+          <div class="time-chip">15:28</div>
+          <div class="time-chip">16:28</div>
+          <div class="time-chip">17:28</div>
+          <div class="time-chip">18:28</div>
+          <div class="time-chip">19:28</div>
+          <div class="time-chip">20:28</div>
+          <div class="time-chip">21:56</div>
+          <div class="time-chip">23:24</div>
+        </div>
+
+        <div class="stops-list">
+          <div class="stops-title">Megállók sorrendben</div>
+          <div class="stop-dots">
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle terminus-dot"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name terminus-name">Solymár, vasútállomás 🚂</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Solymár, Auchan bej. út</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisszentiván, kh.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisszentiván, Szabadság út 85.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisszentiván, Szabadság út 126.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisszentiván, aut. ford.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisszentiván, Szabadság út 194.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisvörösvár, vasútállomás bej. út</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisvörösvár, Bocskay u.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisvörösvár, Dugonics u.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisvörösvár, Nyár u.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisvörösvár, Csokonai u.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisvörösvár, Szt. Erzsébet Otthon</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name">Pilisszántó, Vörösmarty u. 43.</div>
+            </div>
+            <div class="stop-dot-row">
+              <div class="stop-dot-indicator"><div class="stop-dot-circle terminus-dot"></div><div class="stop-dot-line"></div></div>
+              <div class="stop-dot-name terminus-name">Pilisszántó, autóbusz-forduló</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 820 ===== -->
+    <div class="schedule-panel" id="panel-820">
+      <div class="schedule-info-bar">
+        <div class="sched-number">820</div>
+        <div class="sched-meta">
+          <div class="sched-route-name">Budapest – Pilisvörösvár – Pilisszántó</div>
+          <div class="sched-route-detail">Indulás: Budapest, Árpád híd aut. állomás · Külső Bécsi út érintésével · Végállomás: Pilisszántó, aut. forduló</div>
+        </div>
+        <div class="sched-operator">
+          <div class="volanbusz-tag">VOLÁN<span>BUSZ</span></div>
+          <div class="sched-valid">Érvényes: 2025.12.14-től visszavonásig</div>
+        </div>
+      </div>
+
+      <div class="direction-toggle">
+        <button class="dir-btn active" onclick="toggleDir(this, 'dir-820-a', 'dir-820-b')">
+          🟢 Budapest → Pilisszántó irányban
+        </button>
+        <button class="dir-btn" onclick="toggleDir(this, 'dir-820-b', 'dir-820-a')">
+          ↩ Pilisszántó → Budapest irányban
+        </button>
+      </div>
+
+      <!-- Irány A -->
+      <div id="dir-820-a">
+        <div class="timetable-container">
+          <div class="timetable-header">
+            <h3>Budapest → Pilisszántó – Indulási idők (Árpád híd)</h3>
+          </div>
+          <div style="padding:16px 24px 8px; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:700; color:var(--gray-500); text-transform:uppercase; letter-spacing:0.06em;">
+            Indulások Bp., Árpád híd autóbusz-állomásról
+          </div>
+          <div class="times-grid">
+            <div class="time-chip">05:00</div>
+            <div class="time-chip">05:35</div>
+            <div class="time-chip">06:00</div>
+            <div class="time-chip">06:30</div>
+            <div class="time-chip">07:00</div>
+            <div class="time-chip">07:30</div>
+            <div class="time-chip">08:00</div>
+            <div class="time-chip weekend">08:30</div>
+            <div class="time-chip">09:00</div>
+            <div class="time-chip weekend">09:30</div>
+            <div class="time-chip">10:00</div>
+            <div class="time-chip weekend">10:30</div>
+            <div class="time-chip">11:00</div>
+            <div class="time-chip weekend">11:30</div>
+            <div class="time-chip">12:00</div>
+            <div class="time-chip weekend">12:30</div>
+            <div class="time-chip">13:00</div>
+            <div class="time-chip">13:30</div>
+            <div class="time-chip">14:00</div>
+            <div class="time-chip">14:30</div>
+            <div class="time-chip">15:00</div>
+            <div class="time-chip">15:30</div>
+            <div class="time-chip">16:00</div>
+            <div class="time-chip">16:30</div>
+            <div class="time-chip">17:00</div>
+            <div class="time-chip">17:30</div>
+            <div class="time-chip">18:00</div>
+            <div class="time-chip">19:00</div>
+            <div class="time-chip">20:00</div>
+            <div class="time-chip">21:15</div>
+            <div class="time-chip">22:30</div>
+            <div class="time-chip">23:40</div>
+          </div>
+
+          <div class="stops-list">
+            <div class="stops-title">Megállók sorrendben</div>
+            <div class="stop-dots">
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle terminus-dot"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name terminus-name">Budapest, Árpád híd aut. állomás</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Budapest, Orbán B. út</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Budapest, Bóbita u.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Budapest, Üröm v. mh.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Solymár, Külső Bécsi út 35.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Solymár, Kövesbérci u.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Solymári elág. (Auchan áruház)</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, 10-es sz. út, útőrház</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, Fő út 31.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, vh. (kultúrház)</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, Eperjesi u.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, Csokonai u.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisvörösvár, Szt. Erzsébet Otthon</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name">Pilisszántó, Vörösmarty u. 43.</div>
+              </div>
+              <div class="stop-dot-row">
+                <div class="stop-dot-indicator"><div class="stop-dot-circle terminus-dot"></div><div class="stop-dot-line"></div></div>
+                <div class="stop-dot-name terminus-name">Pilisszántó, autóbusz-forduló</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Irány B -->
+      <div id="dir-820-b" style="display:none;">
+        <div class="timetable-container">
+          <div class="timetable-header">
+            <h3>Pilisszántó → Budapest – Indulási idők</h3>
+          </div>
+          <div class="times-grid">
+            <div class="time-chip">04:10</div>
+            <div class="time-chip">05:00</div>
+            <div class="time-chip">05:30</div>
+            <div class="time-chip">06:00</div>
+            <div class="time-chip">06:30</div>
+            <div class="time-chip">07:00</div>
+            <div class="time-chip">07:30</div>
+            <div class="time-chip">08:00</div>
+            <div class="time-chip">08:30</div>
+            <div class="time-chip">09:00</div>
+            <div class="time-chip weekend">09:30</div>
+            <div class="time-chip">10:00</div>
+            <div class="time-chip weekend">10:30</div>
+            <div class="time-chip">11:00</div>
+            <div class="time-chip weekend">11:30</div>
+            <div class="time-chip">12:00</div>
+            <div class="time-chip">13:00</div>
+            <div class="time-chip">14:00</div>
+            <div class="time-chip">15:00</div>
+            <div class="time-chip">16:00</div>
+            <div class="time-chip">17:00</div>
+            <div class="time-chip">18:00</div>
+            <div class="time-chip">19:15</div>
+            <div class="time-chip">20:30</div>
+            <div class="time-chip">22:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 821 ===== -->
+    <div class="schedule-panel" id="panel-821">
+      <div class="schedule-info-bar">
+        <div class="sched-number">821</div>
+        <div class="sched-meta">
+          <div class="sched-route-name">Budapest – Pilisvörösvár vasútállomás</div>
+          <div class="sched-route-detail">A 820-as útvonal kibővítve Pilisvörösvár vasútállomás érintésével · Érvényes: 2020. augusztus 20-ától</div>
+        </div>
+        <div class="sched-operator">
+          <div class="volanbusz-tag">VOLÁN<span>BUSZ</span></div>
+          <div class="sched-valid">Érvényes: 2025.12.14-től visszavonásig</div>
+        </div>
+      </div>
+
+      <div class="notice-box">
+        <span class="notice-icon">🚂</span>
+        <div>
+          <strong>A 821-es járat</strong> a 820-as járat útvonalán közlekedik, kiegészítve a Pilisvörösvár vasútállomás érintésével (Pilisvörösvár, vasútállomás bej. út megálló). A Külső Bécsi úton minden megállóban megáll. Kijelölt meneteken közlekedik – az összes indulás nem a 821-es, hanem a 820-as jelzéssel fut.
+        </div>
+      </div>
+
+      <div class="timetable-container">
+        <div class="timetable-header">
+          <h3>Budapest → Pilisvörösvár vasút. – 821-es menet indulási idők</h3>
+        </div>
+        <div style="padding:16px 24px 8px; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:700; color:var(--gray-500); text-transform:uppercase; letter-spacing:0.06em;">
+          Vasútállomást érintő menetsor (Bp., Árpád híd indulás)
+        </div>
+        <div class="times-grid">
+          <div class="time-chip">05:00</div>
+          <div class="time-chip">06:00</div>
+          <div class="time-chip">07:00</div>
+          <div class="time-chip">08:00</div>
+          <div class="time-chip">09:00</div>
+          <div class="time-chip">10:00</div>
+          <div class="time-chip">11:00</div>
+          <div class="time-chip">12:00</div>
+          <div class="time-chip">13:00</div>
+          <div class="time-chip">14:00</div>
+          <div class="time-chip">15:00</div>
+          <div class="time-chip">16:00</div>
+          <div class="time-chip">17:00</div>
+          <div class="time-chip">18:00</div>
+          <div class="time-chip">19:00</div>
+          <div class="time-chip">20:00</div>
+          <div class="time-chip">21:15</div>
+          <div class="time-chip">22:30</div>
+        </div>
+
+        <div class="stops-list">
+          <div class="stops-title">Különleges megálló: Pilisvörösvár vasútállomás</div>
+          <div class="notice-box" style="margin-top:0; margin-bottom:0;">
+            <span class="notice-icon">📌</span>
+            <div>A 821-es menet az összes 820-as megállón megáll, <strong>plusz</strong> érinti a <strong>Pilisvörösvár, vasútállomás bej. út</strong> megállót is, lehetővé téve a vasúti csatlakozást a H5-ös HÉV-re és a S76-os vonatra.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; color:var(--gray-500); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px;">
+          Csatlakozási lehetőségek Pilisvörösvár vasútállomáson
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div style="background:white; border-radius:8px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.06); border-left:4px solid #0066cc;">
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; color:#0066cc; font-size:1.1rem; margin-bottom:4px;">H5 HÉV</div>
+            <div style="font-size:0.85rem; color:var(--gray-700);">Szentendre ↔ Budapest, Batthyány tér</div>
+            <div style="font-size:0.78rem; color:var(--gray-500); margin-top:4px;">Pilisvörösvár megállóval</div>
+          </div>
+          <div style="background:white; border-radius:8px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.06); border-left:4px solid #cc0000;">
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; color:#cc0000; font-size:1.1rem; margin-bottom:4px;">S76 MÁV</div>
+            <div style="font-size:0.85rem; color:var(--gray-700);">Esztergom ↔ Budapest-Kelenföld</div>
+            <div style="font-size:0.78rem; color:var(--gray-500); margin-top:4px;">Pilisvörösvár vasútállomás</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINK TO OFFICIAL -->
+    <div style="background:white; border-radius:10px; padding:20px 24px; margin-top:28px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.1rem; color:var(--black); margin-bottom:4px;">Hivatalos menetrend</div>
+        <div style="font-size:0.85rem; color:var(--gray-500);">A pontos, aktuális menetrendek a VOLÁNBUSZ / MÁV-csoport oldalán elérhetők</div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <a href="https://www.volanbusz.hu" target="_blank" class="btn-primary" style="font-size:0.85rem; padding:10px 18px;">volanbusz.hu ↗</a>
+        <a href="https://www.mavcsoport.hu" target="_blank" class="btn-outline" style="font-size:0.85rem; padding:10px 18px; color:var(--volán-green); border-color:var(--volán-green);">mavcsoport.hu ↗</a>
+      </div>
+    </div>
+
+  </div><!-- /schedule-content -->
+
+  <!-- FOOTER same -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo-badge-footer">PKV</div>
+          <p>Pilisvörösvári Közlekedési Vállalat – VOLÁNBUSZ agglomerációs közlekedési platform a Pilis térségének utasai számára.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Oldalak</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('home')">Főoldal</a></li>
+            <li><a href="#" onclick="showPage('schedule')">Menetrendek</a></li>
+            <li><a href="#">Jegyvásárlás</a></li>
+            <li><a href="#">Flotta</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Járatok</h4>
+          <ul>
+            <li onclick="setTab('tab-830')">830 – Budapest/Pilisszántó</li>
+            <li onclick="setTab('tab-831')">831 – Solymár/Pilisszántó</li>
+            <li onclick="setTab('tab-820')">820 – Budapest/Pilisszántó</li>
+            <li onclick="setTab('tab-821')">821 – Budapest/Pilisvörösvár vasút.</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kapcsolat</h4>
+          <ul>
+            <li>Pilisvörösvár</li>
+            <li>+36 1 555 0101</li>
+            <li>info@pkv.hu</li>
+            <li>volanbusz.hu</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 PKV – Pilisvörösvári Közlekedési Vállalat</span>
+        <div class="volanbusz-logo"><span></span> VOLÁNBUSZ Zrt. üzemeltetésben</div>
+      </div>
+    </div>
+  </footer>
+</div><!-- /page-schedule -->
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + page);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return false;
+  }
+
+  function setTab(tabId) {
+    // activate tab button
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById(tabId);
+    if (btn) btn.classList.add('active');
+
+    // show panel
+    const panelId = 'panel-' + tabId.replace('tab-', '');
+    document.querySelectorAll('.schedule-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById(panelId);
+    if (panel) panel.classList.add('active');
+  }
+
+  function toggleDir(btn, showId, hideId) {
+    btn.closest('.direction-toggle').querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(showId).style.display = 'block';
+    document.getElementById(hideId).style.display = 'none';
+  }
+</script>
+</body>
+</html>
